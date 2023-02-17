@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="username" type="text" placeholder="username">
+    <br>
+    <input id="password" type="password" placeholder="password">
+    <input type="submit" id="btn" value="Войти">
+    <script>
+        document.querySelector("#btn").onclick = function(){
+            const username = document.getElementById("username").value;
+            const password =  document.getElementById("password").value;
+            sendUser(username,password);
+        }
+
+        async function sendUser(username,password) {
+            let user = {
+                    username: `${username}`,
+                    password: `${password}`
+            };
+
+            const response = await fetch("/auth/signin", {
+                 method: "POST",
+                 headers: {'Content-Type': 'application/json;charset=utf-8'},
+                 body: JSON.stringify(user)
+                });
+            const responseText = await response.text();
+            console.log(responseText);
+        }
+    </script>
+</body>
+</html>
