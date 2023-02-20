@@ -53,18 +53,18 @@ class authController{
             console.log(req.body);
             const user = await User.findOne({username});
             if(!user){
-                return res.status(400).json({message: `Пользователь ${username} не найден`});
+                return res.status(401).json({message: `Пользователь ${username} не найден`});
             }
             const validPasssword = bcrypt.compareSync(password, user.password);
             if(!validPasssword){
-                return res.status(400).json({message: `Неверный пароль`});
+                return res.status(401).json({message: `Неверный пароль`});
             }
             const token = generateAccessToken(user._id,user.roles);
             return res.json({token});
         }       
         catch(err){
             console.log(err);
-            res.status(400).json({message:'Sign in error'});
+            res.status(401).json({message:'Sign in error'});
         }
     }
 
@@ -76,7 +76,7 @@ class authController{
             
         }
         catch(err){
-
+            console.log(err);
         }
     }
 
@@ -85,11 +85,11 @@ class authController{
             const {username,password,newUsername} = req.body;
             const user = await User.findOne({username});
             if(!user){
-                return res.status(400).json({message: `Пользователь ${username} не найден`});
+                return res.status(401).json({message: `Пользователь ${username} не найден`});
             }
             const validPasssword = bcrypt.compareSync(password, user.password);
             if(!validPasssword){
-                return res.status(400).json({message: `Неверный пароль`});
+                return res.status(401).json({message: `Неверный пароль`});
             }
             await User.updateOne({username:`${username}`},{username: `${newUsername}`});
             return res.json({message:`Пользователь ${username} успешно изменил свой логин на ${newUsername}`});

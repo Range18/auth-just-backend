@@ -5,7 +5,6 @@ import profileRouter from "./routes/profileRouter.js";
 import {} from 'dotenv/config';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { nextTick } from "process";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
@@ -14,13 +13,16 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
-
+app.set("view engine", "hbs");
+// app.set("views", "public");
 
 app.get('/', (req,res)=>{
-    res.sendFile(__dirname + "/public/index.html");
+    res.render("index.hbs");
 });
 
-
+app.get('/registration', (req,res)=>{
+    res.render("reg.hbs");
+});
 
 
 

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --experimental-modules app.js",
-    "dev": "nodemon --experimental-modules app.js"
+    "dev": "nodemon -e html,js,mjs,json --experimental-modules app.js"
   },
   "author": "range",
   "license": "ISC",
